@@ -50,7 +50,7 @@ type ResturantSchemaType = z.infer<typeof formSchema>;
 
 type Props = {
   resturantData?: Resturant;
-  onSave: (resturantFormData: FormData) => Resturant;
+  onSave: (resturantFormData: FormData) => void;
   isLoading: boolean;
 };
 
@@ -88,8 +88,7 @@ const ManageResturantForm = ({ resturantData, onSave, isLoading }: Props) => {
     if(resturantFormdataJson.imageFile) {
       formData.append("imageFile", resturantFormdataJson.imageFile);
     }
-    const data:Resturant = await onSave(formData);
-    form.reset(data)
+    onSave(formData);
   };
 
   useEffect(() => {
