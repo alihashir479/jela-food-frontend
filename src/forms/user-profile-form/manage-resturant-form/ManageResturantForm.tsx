@@ -9,7 +9,7 @@ import MenuSection from "./MenuSection";
 import ImageSection from "./ImageSection";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
-import { Resturant } from "@/types/Resturant";
+import { Resturant, MenuItem } from "@/types/types";
 import { useEffect } from "react";
 
 const formSchema = z.object({
@@ -96,7 +96,7 @@ const ManageResturantForm = ({ resturantData, onSave, isLoading }: Props) => {
 
     const updatedDeliveryPrice = parseInt((resturantData.deliveryPrice / 100).toFixed(2))
 
-    const updatedMenuItems = resturantData.menuItems.map((menuItem) => ({
+    const updatedMenuItems = resturantData.menuItems.map((menuItem: MenuItem) => ({
       ...menuItem,
       price: parseInt((menuItem.price / 100).toFixed(2))
     }))
