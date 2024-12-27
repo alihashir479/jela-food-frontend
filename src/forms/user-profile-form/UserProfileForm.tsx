@@ -26,22 +26,30 @@ const userProfileSchema = z.object({
   city: z.string().min(1, { message: "City must be required" }),
 });
 
-type userSchemaType = z.infer<typeof userProfileSchema>;
+export type userSchemaType = z.infer<typeof userProfileSchema>;
 
 type Props = {
   onSave: (userProfileData: userSchemaType) => void;
   isLoading: boolean;
-  currentUser: User
+  currentUser: User;
+  title?: string;
+  buttonText?: string;
 };
-const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
+const UserProfileForm = ({
+  onSave,
+  isLoading,
+  currentUser,
+  title = "User Profile",
+  buttonText = "Submit",
+}: Props) => {
   const form = useForm<userSchemaType>({
     resolver: zodResolver(userProfileSchema),
-    defaultValues: currentUser
+    defaultValues: currentUser,
   });
 
-  useEffect(()=> {
-    form.reset(currentUser)
-  }, [currentUser, form])
+  useEffect(() => {
+    form.reset(currentUser);
+  }, [currentUser, form]);
 
   return (
     <Form {...form}>
@@ -49,7 +57,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
         onSubmit={form.handleSubmit(onSave)}
         className="space-y-4 bg-gray-50 rounded-lg md:p-10"
       >
-        <h2 className="text-2xl font-bold">User Profile Form</h2>
+        <h2 className="text-2xl font-bold">{title}</h2>
         <FormDescription>View and change your profile here</FormDescription>
         <FormField
           control={form.control}
@@ -125,7 +133,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
           <LoadingButton />
         ) : (
           <Button type="submit" className="bg-orange-500">
-            Submit
+            {buttonText}
           </Button>
         )}
       </form>
