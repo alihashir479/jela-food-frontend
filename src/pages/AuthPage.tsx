@@ -14,7 +14,8 @@ const AuthPage = () => {
       createUser({ auth0Id: user.sub, email: user.email });
       hasUserCreated.current = true;
     }
-    navigate('/')
+    let redirectRoute = sessionStorage.getItem('after-auth-redirect')
+    navigate(redirectRoute || '/')
   }, [user, navigate, hasUserCreated.current]);
   
   return <>Loading...</>;

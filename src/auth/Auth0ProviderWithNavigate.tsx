@@ -19,7 +19,9 @@ const Auth0ProviderWithNavigate = ({children}: Props) => {
   }
 
   const onRedirectCallback = (appState?: AppState) => {
-    navigate(appState?.redirectTo || '/auth-callback')
+    sessionStorage.removeItem('after-auth-redirect')
+    sessionStorage.setItem('after-auth-redirect', appState?.redirectTo as string)
+    navigate('/auth-callback')
   }
 
   return (
